@@ -1,0 +1,52 @@
+#! /bin/sh
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+#bspc config border_width         2
+#bspc config window_gap           12
+#
+#bspc config split_ratio          0.52
+#bspc config borderless_monocle   true
+#bspc config gapless_monocle      true
+
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+
+# Border and Gap
+bspc config border_width         5
+bspc config window_gap          10
+
+# Configuration
+bspc config split_ratio          0.50
+
+# Mouse
+bspc config click_to_focus	 	button1
+bspc config focus_follows_pointer 	true
+
+# Monocle mode settings
+bspc config borderless_monocle   true
+bspc config gapless_monocle      false
+
+# Colors
+bspc config normal_border_color		"#4c566a"
+bspc config active_border_color		"#4c566a"
+bspc config focused_border_color	"#5e81ac"
+bspc config presel_feedback_color	"#ebcb8b"
+
+# Rules
+bspc rule -a Zathura state=tiled
+bspc rule -a Pavucontrol state=floating
+
+# Background
+feh --bg-fill --randomize "$(xdg-user-dir PICTURES)/Backgrounds" &
+
+# Compositor
+picom &
+
+# Notifications
+dunst &
+
+# Polybar
+polybar example &
