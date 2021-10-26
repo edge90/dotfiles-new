@@ -21,14 +21,18 @@ bar:
 
   left:
     - i3:
+        sort: ascending
         anchors: # Not used (directly) by f00bar; used here to avoid duplication
-          - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
-          - string: &default {<<: *i3_common, text: "? {name}"}
-          - string: &main    {<<: *i3_common, text: , font: *font_icon}
-          - string: &surfing {<<: *i3_common, text: , font: *font_icon}
-          - string: &misc    {<<: *i3_common, text: , font: *font_icon}
-          - string: &mail    {<<: *i3_common, text: , font: *font_icon}
-          - string: &music   {<<: *i3_common, text: , font: *font_icon}
+          # TODO: make a universal tool for switching workspace
+          #- string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
+          - string: &i3_common {margin: 5, on-click: "i3-msg --quiet workspace {name}"}
+          - string: &default     {<<: *i3_common, text: "? {name}"}
+          - string: &main        {<<: *i3_common, text: , font: *font_icon}
+          - string: &surfing     {<<: *i3_common, text: , font: *font_icon}
+          - string: &misc        {<<: *i3_common, text: , font: *font_icon}
+          - string: &mail        {<<: *i3_common, text: , font: *font_icon}
+          - string: &music       {<<: *i3_common, text: , font: *font_icon}
+          - string: &scratchpad  {<<: *i3_common, text: , font: *font_icon}
           - focused: &focused
               deco: {stack: [background: {color: ffa0a04c}, <<: *std_underline]}
           - invisible: &invisible {foreground: ffffff55}
@@ -54,7 +58,7 @@ bar:
                 unfocused: {string: {<<: *default}}
                 invisible: {string: {<<: [*default, *invisible]}}
                 urgent:    {string: {<<: [*default, *urgent]}}
-          main:
+          ws1:
             map:
               tag: state
               values:
@@ -62,7 +66,7 @@ bar:
                 unfocused: {string: {<<: *main}}
                 invisible: {string: {<<: [*main, *invisible]}}
                 urgent:    {string: {<<: [*main, *urgent]}}
-          surfing:
+          ws2:
             map:
               tag: state
               values:
@@ -70,7 +74,7 @@ bar:
                 unfocused: {string: {<<: *surfing}}
                 invisible: {string: {<<: [*surfing, *invisible]}}
                 urgent:    {string: {<<: [*surfing, *urgent]}}
-          misc:
+          ws3:
             map:
               tag: state
               values:
@@ -78,16 +82,7 @@ bar:
                 unfocused: {string: {<<: *misc}}
                 invisible: {string: {<<: [*misc, *invisible]}}
                 urgent:    {string: {<<: [*misc, *urgent]}}
-
-          mail:
-            map:
-              tag: state
-              values:
-                focused: {string: {<<: [*mail, *focused]}}
-                unfocused: {string: {<<: *mail}}
-                invisible: {string: {<<: [*mail, *invisible]}}
-                urgent:    {string: {<<: [*mail, *urgent]}}
-          music:
+          ws4:
             map:
               tag: state
               values:
@@ -95,6 +90,22 @@ bar:
                 unfocused: {string: {<<: *music}}
                 invisible: {string: {<<: [*music, *invisible]}}
                 urgent:    {string: {<<: [*music, *urgent]}}
+          ws5:
+            map:
+              tag: state
+              values:
+                focused: {string: {<<: [*mail, *focused]}}
+                unfocused: {string: {<<: *mail}}
+                invisible: {string: {<<: [*mail, *invisible]}}
+                urgent:    {string: {<<: [*mail, *urgent]}}
+          ws99:
+            map:
+              tag: state
+              values:
+                focused: {string: {<<: [*scratchpad, *focused]}}
+                unfocused: {string: {<<: *scratchpad}}
+                invisible: {string: {<<: [*scratchpad, *invisible]}}
+                urgent:    {string: {<<: [*scratchpad, *urgent]}}
           current:
             map:
               left-margin: 7
@@ -116,7 +127,7 @@ bar:
 
   right:
     - network:
-        name: wlo1
+        name: enp4s0
         content:
           map:
             tag: state
@@ -145,38 +156,6 @@ bar:
                     "":
                       string:
                         text: 
-                        font: *font_icon
-                        foreground: ffffff66
-    - network:
-        name: gpd0
-        content:
-          map:
-            tag: state
-            default:
-              string:
-                text: 
-                font: *font_icon
-                foreground: ffffff66
-            values:
-              down:
-                string:
-                  text: 
-                  font: *font_icon
-                  foreground: ff0000ff
-              up:
-                map:
-                  tag: ipv4
-                  default:
-                    - string:
-                        text: 
-                        font: *font_icon
-                    - string:
-                        text: "{ipv4}"
-                        font: *font
-                  values:
-                    "":
-                      string:
-                        text: 
                         font: *font_icon
                         foreground: ffffff66
 
