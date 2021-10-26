@@ -3,6 +3,11 @@
 -- Plugins
 ----------------------------------------
 require('packer').startup(function()
+  -- Packer
+  use {
+    'wbthomason/packer.nvim'
+  }
+  
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
