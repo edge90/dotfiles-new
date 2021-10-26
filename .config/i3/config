@@ -1,0 +1,186 @@
+
+########################################
+# Mappings
+########################################
+
+set $alt Mod1
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term alacritty
+
+set $program_launcher dmenu_run -b -p "Run:"
+
+########################################
+# Keyboard
+########################################
+# TODO: Only for sway
+# Chould be solved with "include local". works for sway, in git for i3
+#input * xkb_layout "se"
+#input * xkb_numlock enable
+
+# TODO: Change once pipewire is installed
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioMute exec pamixer -t
+# TODO: use pamixer
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86Search exec $program_launcher
+
+########################################
+# Layout
+########################################
+gaps inner 20
+gaps outer 0
+
+########################################
+# Windows
+########################################
+
+# Movement
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+f exec wmfocus
+
+# Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# Close window
+bindsym $mod+Shift+q kill
+
+# Move
+bindsym $mod+Shift+1 move to workspace ws1
+bindsym $mod+Shift+2 move to workspace ws2
+bindsym $mod+Shift+3 move to workspace ws3
+bindsym $mod+Shift+4 move to workspace ws4
+bindsym $mod+Shift+5 move to workspace ws5
+bindsym $mod+Shift+6 move to workspace ws6
+bindsym $mod+Shift+7 move to workspace ws7
+bindsym $mod+Shift+8 move to workspace ws8
+bindsym $mod+Shift+9 move to workspace ws9
+bindsym $mod+Shift+0 move to workspace ws99
+
+# Floating window
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Appearance
+font Hack Nerd Font Mono
+default_border pixel 3
+
+set $focused #5e81acff
+client.focused $focused $focused $focused $focused $focused
+
+set $unfocused #4c566a
+client.unfocused $unfocused $unfocused $unfocused $unfocused $unfocused
+
+set $urgent #bf616a
+client.urgent $urgent $urgent $urgent $urgent $urgent
+
+# TODO: Fix resize. Doesn't work in i3 (resizes the previous window)
+for_window [instance="popup-small"] floating enable, resize set 640 360, move position center
+for_window [instance="popup-medium"] floating enable, resize set 960 540, move position center
+for_window [instance="popup-large"] floating enable, resize set 1280 720, move position center
+for_window [instance="popup-full"] floating enable, resize set 1664 936, move position center
+
+# Where to split
+bindsym $mod+v splitv
+bindsym $mod+b splith
+
+# Mode
+bindsym $mod+Shift+f fullscreen
+
+# Resize
+bindsym $mod+Ctrl+h resize shrink width 50px
+bindsym $mod+Ctrl+j resize shrink height 50px
+bindsym $mod+Ctrl+k resize grow height 50px
+bindsym $mod+Ctrl+l resize grow width 50px
+bindsym $mod+Shift+Ctrl+h resize shrink width 10px
+bindsym $mod+Shift+Ctrl+j resize shrink height 10px
+bindsym $mod+Shift+Ctrl+k resize grow height 10px
+bindsym $mod+Shift+Ctrl+l resize grow width 10px
+bindsym $mod+Ctrl+plus resize grow height 50px; resize grow width 50px
+bindsym $mod+Ctrl+minus resize shrink height 50px; resize shrink width 50px
+bindsym $mod+Shift+Ctrl+plus resize grow height 10px; resize grow width 10px
+bindsym $mod+Shift+Ctrl+minus resize shrink height 10px; resize shrink width 10px
+
+########################################
+# Workspaces
+########################################
+
+# Select
+bindsym $mod+1 workspace ws1
+bindsym $mod+2 workspace ws2
+bindsym $mod+3 workspace ws3
+bindsym $mod+4 workspace ws4
+bindsym $mod+5 workspace ws5
+bindsym $mod+6 workspace ws6
+bindsym $mod+7 workspace ws7
+bindsym $mod+8 workspace ws8
+bindsym $mod+9 workspace ws9
+bindsym $mod+0 workspace ws99
+
+########################################
+# Launchers
+########################################
+
+# Monitoring
+bindsym $mod+m exec alacritty --class "popup-full" --command gotop
+
+# Containers
+bindsym $mod+c exec alacritty --class "popup-full" --command lazydocker
+
+# Program
+bindsym $mod+d exec $program_launcher
+
+# Ssh
+bindsym $mod+s exec $HOME/.local/bin/ssh-to-menu.fish
+
+# Python shell
+bindsym $mod+p exec alacritty --class "popup-large" --command $HOME/.local/bin/python_shell.py
+
+# vpn
+bindsym $mod+F11 exec alacritty --class "popup-small" --command fish -c $HOME/.local/bin/vpn-work-toggle.bash
+
+# TODO: mount / unmount usb
+
+########################################
+# Terminal
+########################################
+
+# Open terminal
+bindsym $mod+Return exec $term
+
+########################################
+# Configuration
+########################################
+
+# Reload config
+bindsym $mod+Shift+c restart
+
+########################################
+# Services
+########################################
+# Make a script that does something like `ssh-add -l || rm -f $HOME/.ssh/agent.sock; ssh-agent -a $HOME/.ssh/agent.sock`
+exec_always killall ssh-agent; rm -f $HOME/.ssh/agent.sock; ssh-agent -a $HOME/.ssh/agent.sock
+exec_always killall yambar; yambar
+#
+#exec swaybg --mode fill --image $HOME/Pictures/desktop/stone_house.jpg
+
+# TODO: Should be moved once `include` is available.
+exec_always picom
+
