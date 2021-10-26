@@ -24,6 +24,11 @@ set --export PAGER less
 # Aliases
 ########################################
 
+# vim
+alias vim=$EDITOR
+alias vi=$EDITOR
+alias e=$EDITOR
+
 # ls
 alias l="ls -la"
 alias la="ls -a"
@@ -93,3 +98,4 @@ end
 # Prompt
 ########################################
 starship init fish | source
+fish_vi_key_bindings
