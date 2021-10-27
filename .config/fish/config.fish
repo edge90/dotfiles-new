@@ -140,6 +140,11 @@ bind --mode default \cg\cl 'git log; commandline -f repaint'
 bind --mode default gl 'git log; commandline -f repaint'
 bind --mode insert \cg\cl 'git log; commandline -f repaint'
 
+# git push
+bind --mode default \cg\cp 'git push; commandline -f repaint'
+bind --mode default gp 'git push; commandline -f repaint'
+bind --mode insert \cg\cp 'git push; commandline -f repaint'
+
 # git restore
 bind --mode default \cg\cr 'git-restore-file; commandline -f repaint'
 bind --mode default gr 'git-restore-file; commandline -f repaint'
